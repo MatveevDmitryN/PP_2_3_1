@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users List</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Users</h1>
+
+
+<form action="/users/new" method="post">
+    <h3>Add New User</h3>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required><br>
+
+    <button type="submit">Save</button>
+</form>
+
+<h3>List of Users</h3>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.age}"></td>
+        <td>
+
+            <form action="/users/new" method="post">
+                <input type="hidden" name="id" th:value="${user.id}" />
+                <input type="text" name="name" th:value="${user.name}" required />
+                <input type="email" name="email" th:value="${user.email}" required />
+                <input type="number" name="age" th:value="${user.age}" required />
+                <button type="submit">Update</button>
+            </form>
+
+
+            <form action="/users/delete" method="post">
+                <input type="hidden" name="id" th:value="${user.id}" />
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
