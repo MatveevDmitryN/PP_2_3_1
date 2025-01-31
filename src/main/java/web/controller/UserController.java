@@ -5,24 +5,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.service.UserService;
 import web.model.User;
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping
     public String listUsers(Model model) {
         model.addAttribute("users", userService.findAll());
         return "users";
     }
 
 
-    @PostMapping("/users/new")
+    @PostMapping("/new")
     public String saveOrUpdateUser(@RequestParam(value = "id", required = false) Long id,
                                    @RequestParam("name") String name,
                                    @RequestParam("email") String email,
@@ -45,7 +47,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/users/delete")
+    @PostMapping("/delete")
     public String deleteUser(@RequestParam("id") Long id) {
         userService.delete(id);
         return "redirect:/users";
